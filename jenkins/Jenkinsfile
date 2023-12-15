@@ -80,7 +80,7 @@ pipeline {
         steps{
             sh '''
                 docker ps 
-                docker build -f java-app:v2 ./jenkins/app/
+                docker build -f java-app:v2 ./jenkins/app/Dockerfile
             '''
         }
         }
