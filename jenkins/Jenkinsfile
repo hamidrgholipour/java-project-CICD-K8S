@@ -78,13 +78,13 @@ pipeline {
             }    
         
         steps{
-            // sh '''
-            //     pwd && ls 
-            //     cd ./jenkins/app/
-            //     pwd && ls
-            //     cp /maven-repo/v2/vprofile*.war app.war
-            //     docker build -f java-app:v4 .
-            // '''
+            sh '''
+                pwd && ls 
+                cd ./jenkins/app/
+                pwd && ls
+                cp /maven-repo/v2/vprofile*.war app.war
+                docker build -f java-app:v4 .
+            '''
         }
         }
     // stage('Build') {
