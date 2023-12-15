@@ -70,7 +70,7 @@ pipeline {
     //     sh 'version'
     //   }
     // }   
-        stage(Build docker){
+        stage('Build docker'){
             docker {
                     image "docker:dind"
                     args "-v /root/maven-repo:/maven-repo -v /var/run/docker.sock:/var/run/docker.sock" }
