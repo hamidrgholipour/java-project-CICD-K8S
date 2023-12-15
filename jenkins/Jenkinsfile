@@ -100,26 +100,6 @@ pipeline {
             '''
         }
         }
-    // stage('Build') {
-    //   agent {
-    //             docker {
-    //                 image "maven:3.8.6-jdk-8"
-    //                 args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
-    //             }        
-    //   steps {
-    //     milestone(ordinal: null, label: "Milestone: Build")
-    //     sh 'echo Bulding'
-    //     script{
-    //       // docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-    //       //   myapp.push("latest")
-    //       //   myapp.push("${ARTVERSION}")
-    //       //     }
-    //       //myapp = docker.build( "${DOCKER_IMAGE_REPO}/${DC_IMAGE_NAME}:${ARTVERSION}")
-    //       myapp = docker.build( "${DC_IMAGE_NAME}:${ARTVERSION}")
-    //       myapp = docker.build( "${DC_IMAGE_NAME}:latest")
-    //     }
-    //   }
-    // }
 
  
     }
