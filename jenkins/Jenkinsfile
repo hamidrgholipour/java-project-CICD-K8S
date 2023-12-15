@@ -72,9 +72,13 @@ pipeline {
     // }   
         stage(Build docker){
             docker {
-                    image "docker"
-                     args "-v /root/maven-repo:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
-
+                    image "docker:dind"
+                     args "-v /root/maven-repo:/maven-repo -v /var/run/docker.sock:/var/run/docker.sock" }
+        }
+        steps{
+            sh '''
+                docker ps 
+            '''
         }
     // stage('Build') {
     //   agent {
