@@ -79,6 +79,7 @@ pipeline {
         
         steps{
             sh '''
+                pwd && ls 
                 cd ./jenkins/app/
                 cp /maven-repo/v2/vprofile*.war app.war
                 docker build -f java-app:v4 .
