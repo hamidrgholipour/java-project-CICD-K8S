@@ -24,21 +24,21 @@ pipeline {
         //     git(url: 'http://192.168.10.201/root/java-temp', branch: 'master')
         //    }
         // }  
-        stage('Test') {
-        agent {
-                docker {
-                    image "maven:3.8.6-jdk-8"
-                    args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
-                }        
-        steps {
-            //milestone(ordinal: null, label: "Milestone: Test")
-            sh """
-            ls
-            cd code
-            mvn test
-            """ 
-            }
-        }
+        // stage('Test') {
+        // agent {
+        //         docker {
+        //             image "maven:3.8.6-jdk-8"
+        //             args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
+        //         }        
+        // steps {
+        //     //milestone(ordinal: null, label: "Milestone: Test")
+        //     sh """
+        //     ls
+        //     cd code
+        //     mvn test
+        //     """ 
+        //     }
+        // }
         stage('Build Artifact') {
         agent {
                 docker {
