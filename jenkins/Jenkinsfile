@@ -33,6 +33,7 @@ pipeline {
         steps {
             //milestone(ordinal: null, label: "Milestone: Test")
             sh """
+            ls
             cd code
             mvn test
             """ 
