@@ -83,7 +83,20 @@ pipeline {
                 cd ./jenkins/app/
                 pwd && ls
                 cp /maven-repo/v2/vprofile*.war app.war
-                docker build -t java-app:v4 .
+                docker build -t ${DOCKER_IMAGE_REPO}/java-app:v4 .
+            '''
+        }
+        }
+        stage('push docker'){
+            agent{
+            docker {
+                    image "docker:dind"
+                    args "-v /root/maven-repo:/maven-repo -v /var/run/docker.sock:/var/run/docker.sock -u 0" }
+            }    
+        
+        steps{
+            sh '''
+                docker push ${DOCKER_IMAGE_REPO}/java-app:v4
             '''
         }
         }
