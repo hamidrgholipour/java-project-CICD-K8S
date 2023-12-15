@@ -71,9 +71,11 @@ pipeline {
     //   }
     // }   
         stage('Build docker'){
+            agent{
             docker {
                     image "docker:dind"
                     args "-v /root/maven-repo:/maven-repo -v /var/run/docker.sock:/var/run/docker.sock" }
+            }    
         }
         steps{
             sh '''
