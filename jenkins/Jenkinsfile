@@ -79,8 +79,8 @@ pipeline {
         
         steps{
             sh '''
-                docker ps 
-                docker build -f java-app:v2 ./jenkins/app/Dockerfile
+                cp /maven-repo/v2/vprofile*.war app.war
+                docker build -f java-app:v4 ./jenkins/app/Dockerfile
             '''
         }
         }
