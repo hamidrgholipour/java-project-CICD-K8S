@@ -76,11 +76,12 @@ pipeline {
                     image "docker:dind"
                     args "-v /root/maven-repo:/maven-repo -v /var/run/docker.sock:/var/run/docker.sock" }
             }    
-        }
+        
         steps{
             sh '''
                 docker ps 
             '''
+        }
         }
     // stage('Build') {
     //   agent {
