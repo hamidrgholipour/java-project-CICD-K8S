@@ -1,0 +1,45 @@
+- name: Generate war file , copy war & sql file to files directory
+  hosts: localhost
+  connection: local
+  become: yes
+  tasks:
+    - name: Install  jdk, maven, git
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      loop:
+        - git
+        - openjdk-8-jdk
+        - maven
+
+
+    - name: Clone source code from git
+      git:
+        repo: 'https://github.com/hamidrgholipour/java-project/tree/main/code'
+        dest: ./Vprofile-repo
+        version: main
+      register: git_status
+
+
+    - name: mvn install command to build war filr
+      command: "mvn install"
+      args:
+        chdir: Vprofile-repo
+      when: git_status.changed
+      register: mvn_info
+
+
+    - name: Copy war to files directory
+      copy:
+        src: "{{item}}"
+        dest: files/ROOT.war
+      with_fileglob: Vprofile-repo/target/*.war
+
+    - name: Copy SQL file to files directory
+      copy:
+        src: Vprofile-repo/src/main/resources/db_backup.sql
+        dest: files/db_backup.sql
+
+
+

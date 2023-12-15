@@ -1,0 +1,2 @@
+the user and pass is : admin_vp	admin_vp
+and before building (mvn install in code directory change the application.properties)

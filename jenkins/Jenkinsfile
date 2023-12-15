@@ -1,0 +1,99 @@
+#!groovy
+
+pipeline {
+  
+	agent any
+    options {
+        timestamps()
+        timeout(time: 2, unit: 'HOURS')
+        }
+
+    environment {
+        JAVA_TOOL_OPTIONS = "-Duser.home=/var/maven"
+        DC_IMAGE_NAME       = "java-app"
+        //ARTVERSION       = "${env.BUILD_ID}"
+        ARTVERSION          = "v1"
+        DOCKER_IMAGE_REPO   = "repo.local"
+        CHART_NAME          = "hamid-node"
+      }
+
+
+    stages{
+
+        // stage('Checkout Code') {
+        // steps {
+        //     git(url: 'http://192.168.10.201/root/java-temp', branch: 'master')
+        //    }
+        // }  
+        stage('Test') {
+        agent {
+                docker {
+                    image "maven:3.8.6-jdk-8"
+                    args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
+                }        
+        steps {
+            //milestone(ordinal: null, label: "Milestone: Test")
+            sh """
+            cd code
+            mvn test
+            """ 
+            }
+        }
+        stage('Build Artifact') {
+        agent {
+                docker {
+                    image "maven:3.8.6-jdk-8"
+                    args "-v /root/maven-repo:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
+                }        
+        steps {
+            sh 'cd code'
+            sh 'mvn -version'
+            sh 'mvn clean install'
+        }
+      
+    }
+    // stage('temp') {
+    //     agent { docker{ image 'maven:3.8.6-jdk-8' 
+    //     args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" } }
+    //     steps {
+    //         sh 'pwd'
+    //         sh 'cd code'
+    //         sh 'mvn clean install'
+    //     }
+    // }
+
+    // stage('trivy') {
+    //     agent { 
+    //     docker { image 'aquasec/trivy:latest' }
+    //   }
+    //   steps {
+    //     sh 'version'
+    //   }
+    // }   
+
+    // stage('Build') {
+    //   agent {
+    //             docker {
+    //                 image "maven:3.8.6-jdk-8"
+    //                 args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
+    //             }        
+    //   steps {
+    //     milestone(ordinal: null, label: "Milestone: Build")
+    //     sh 'echo Bulding'
+    //     script{
+    //       // docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+    //       //   myapp.push("latest")
+    //       //   myapp.push("${ARTVERSION}")
+    //       //     }
+    //       //myapp = docker.build( "${DOCKER_IMAGE_REPO}/${DC_IMAGE_NAME}:${ARTVERSION}")
+    //       myapp = docker.build( "${DC_IMAGE_NAME}:${ARTVERSION}")
+    //       myapp = docker.build( "${DC_IMAGE_NAME}:latest")
+    //     }
+    //   }
+    // }
+
+ 
+    }
+
+
+}
