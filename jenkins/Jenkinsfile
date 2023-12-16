@@ -51,7 +51,7 @@ pipeline {
             sh 'mvn clean install'
         }
     }
-
+    
     // stage('temp') {
     //     agent { docker{ image 'maven:3.8.6-jdk-8' 
     //     args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" } }
@@ -91,13 +91,12 @@ pipeline {
         //             image "docker:dind"
         //             args "-v /root/maven-repo:/maven-repo -v /var/run/docker.sock:/var/run/docker.sock -u 0" }
         //     }    
-        
-        steps{
-            sh '''
-                docker push ${DOCKER_IMAGE_REPO}/java-app:v4
-            '''
-        }
-        }
+        // steps{
+        //     sh '''
+        //         docker push ${DOCKER_IMAGE_REPO}/java-app:v4
+        //     '''
+        // }
+        // }
 
  
     }
