@@ -74,7 +74,7 @@ pipeline {
     //   }
     // } 
 
-        stages('Builing docker files'){
+        stage('Builing docker files'){
             parallel {
                 stage('Build docker java'){
                     agent{
