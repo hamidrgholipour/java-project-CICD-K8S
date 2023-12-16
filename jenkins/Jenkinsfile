@@ -18,53 +18,37 @@ pipeline {
 
 
     stages{
-
         // stage('Checkout Code') {
         // steps {
         //     git(url: 'https://github.com/hamidrgholipour/java-temp.git', branch: 'master')
         //    }
         // }  
-        stage('Test') {
-        agent {
-                docker {
-                    image "maven:3.8.6-jdk-8"
-                    args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
-                }        
-        steps {
-            //milestone(ordinal: null, label: "Milestone: Test")
-            sh """
-            ls
-            cd code
-            mvn test
-            """ 
-            }
-        }
+        // stage('Test') {
+        // agent {
+        //         docker {
+        //             image "maven:3.8.6-jdk-8"
+        //             args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
+        //         }        
+        // steps {
+        //     sh """
+        //     cd code
+        //     mvn test
+        //     """ 
+        //     }
+        // }
 
-        stage('Build Artifact') {
-        agent {
-                docker {
-                    image "maven:3.8.6-jdk-8"
-                    args "-v /root/maven-repo:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
-                }        
-        steps {
-            // sh 'pwd && ls'
-            // sh 'cd $WORKSPACE/code' //test it
-            // sh 'pwd && ls'
-            // sh 'mvn -version'
-            sh 'mvn -f code/pom.xml clean install'
-        }
-    }
-    
-    // stage('temp') {
-    //     agent { docker{ image 'maven:3.8.6-jdk-8' 
-    //     args "-v /tmp/maven:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" } }
+    //     stage('Build Artifact') {
+    //     agent {
+    //             docker {
+    //                 image "maven:3.8.6-jdk-8"
+    //                 args "-v /root/maven-repo:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
+    //             }        
     //     steps {
-    //         sh 'pwd'
-    //         sh 'cd code'
-    //         sh 'mvn clean install'
+    //         // sh 'cd $WORKSPACE/code' //test it
+    //         sh 'mvn -f code/pom.xml clean install'
     //     }
     // }
-
+    
     // stage('trivy') {
     //     agent { 
     //     docker { image 'aquasec/trivy:latest' }
@@ -99,9 +83,7 @@ pipeline {
                     // }    
                     steps{
                         sh '''
-                            pwd
                             cd $WORKSPACE/containerization/db
-                            pwd
                             docker build -t ${DOCKER_IMAGE_REPO}/db-app:v1 .
                         '''
                     }
