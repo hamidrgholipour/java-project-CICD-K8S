@@ -1,4 +1,4 @@
-# Default values for app-chart.
+# Default values for java-chart.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -8,7 +8,7 @@ replicaCount_db: 1
 application_name: "java-app"
 
 image_app:
-  repository: repo.local/java-app 
+  repository: repo.local/db-app 
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1"

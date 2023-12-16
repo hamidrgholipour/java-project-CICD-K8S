@@ -13,7 +13,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: {{ include "app-chart.fullname" . }}
+                name: {{ include "java-chart.fullname" . }}
                 port:
                   number: {{ .Values.service_app.port }}
 

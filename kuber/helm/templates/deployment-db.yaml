@@ -4,7 +4,7 @@ metadata:
   name: java-db-chart
   labels:
     app.kubernetes.io/type: "java-app"
-    {{- include "app-chart.labels" . | nindent 4 }}
+    {{- include "java-chart.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount_db }}
@@ -12,7 +12,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/type: "java-db"
-      {{- include "app-chart.selectorLabels" . | nindent 6 }}
+      {{- include "java-chart.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -21,7 +21,7 @@ spec:
       {{- end }}
       labels:
         app.kubernetes.io/type: "java-db"
-        {{- include "app-chart.labels" . | nindent 8 }}
+        {{- include "java-chart.labels" . | nindent 8 }}
 	{{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
