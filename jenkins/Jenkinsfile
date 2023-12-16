@@ -72,22 +72,44 @@ pipeline {
     //   steps {
     //     sh 'version'
     //   }
-    // }   
-        stage('Build docker'){
-            agent{
-            docker {
-                    image "docker:dind"
-                    args "-v /root/maven-repo:/maven-repo -v /var/run/docker.sock:/var/run/docker.sock -u 0" }
-            }    
-        
-        steps{
-            sh '''
-                cd $WORKSPACE/containerization/app
-                cp /maven-repo/repository/com/visualpathit/vprofile/v2/vprofile*.war app.war
-                docker build -t ${DOCKER_IMAGE_REPO}/java-app:v4 .
-            '''
+    // } 
+
+        stages('Builing docker files'){
+            parallel {
+                stage('Build docker java'){
+                    agent{
+                        docker {
+                            image "docker:dind"
+                            args "-v /root/maven-repo:/maven-repo -v /var/run/docker.sock:/var/run/docker.sock -u 0" }
+                    }    
+                    steps{
+                        sh '''
+                            cd $WORKSPACE/containerization/app
+                            cp /maven-repo/repository/com/visualpathit/vprofile/v2/vprofile*.war app.war
+                            docker build -t ${DOCKER_IMAGE_REPO}/java-app:v4 .
+                        '''
+                    }
+                }
+
+                stage('Build Sql'){
+                    // agent{
+                    // docker {
+                    //         image "docker:dind"
+                    //         args "-v /root/maven-repo:/maven-repo -v /var/run/docker.sock:/var/run/docker.sock -u 0" }
+                    // }    
+                    steps{
+                        sh '''
+                            pwd
+                            cd $WORKSPACE/containerization/db
+                            pwd
+                            docker build -t ${DOCKER_IMAGE_REPO}/db-app:v1 .
+                        '''
+                    }
+                }
+            }
         }
-        }
+
+
         // stage('push docker'){
         //     agent{
         //     docker {
