@@ -46,6 +46,7 @@ pipeline {
                     args "-v /root/maven-repo:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
                 }        
         steps {
+            sh 'ls'
             sh 'cd code'
             sh 'ls'
             sh 'mvn -version'
