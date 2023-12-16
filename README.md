@@ -1,3 +1,3 @@
 # java-project
 monolithic to microservices
-this project contains CICD a service and kubernetes deployment
+dploying java artifact and making docker images with Mysql DB fully automated using jenkins pipelines. dploying with Argocd and helm on kubernetes cluster.
