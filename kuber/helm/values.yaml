@@ -11,13 +11,13 @@ image_app:
   repository: repo.local/java-app 
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1"
+  tag: "latest"
 
 image_db:
   repository: repo.local/db-app 
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v1"
+  tag: "latest"
 
 imagePullSecrets: []
 nameOverride: ""
