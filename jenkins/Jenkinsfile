@@ -47,8 +47,8 @@ pipeline {
                 }        
         steps {
             sh 'ls'
-            sh 'cd code'
-            sh 'ls'
+            sh 'cd ./code'
+            sh 'PWD && ls'
             sh 'mvn -version'
             sh 'mvn clean install'
         }
