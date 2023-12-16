@@ -47,10 +47,10 @@ pipeline {
                     args "-v /root/maven-repo:/var/maven/.m2 -e MAVEN_CONFIG=/var/maven/.m2 -u 0" }
                 }        
         steps {
-            sh 'pwd && ls'
-            sh 'cd $WORKSPACE/code' //test it
-            sh 'pwd && ls'
-            sh 'mvn -version'
+            // sh 'pwd && ls'
+            // sh 'cd $WORKSPACE/code' //test it
+            // sh 'pwd && ls'
+            // sh 'mvn -version'
             sh 'mvn -f code/pom.xml clean install'
         }
     }
@@ -82,7 +82,7 @@ pipeline {
         
         steps{
             sh '''
-                cd ./containerization/app
+                cd $WORKSPACE/containerization/app
                 cp /maven-repo/repository/com/visualpathit/vprofile/v2/vprofile*.war app.war
                 docker build -t ${DOCKER_IMAGE_REPO}/java-app:v4 .
             '''
