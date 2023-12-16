@@ -1,16 +1,16 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "java-chart.fullname" . }}
+  name: {{ include "java-chart.fullname" . }}-app
   labels:
     {{- include "java-chart.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service_app.type }}
   ports:
     - port: {{ .Values.service_app.port }}
-      targetPort: java-app-port
+      targetPort: {{ .Values.service_app.name }}
       protocol: TCP
-      name: java-app-port
+      name: {{ .Values.service_app.name }}
   selector:
     app.kubernetes.io/type: "java-app"
     {{- include "java-chart.selectorLabels" . | nindent 4 }}

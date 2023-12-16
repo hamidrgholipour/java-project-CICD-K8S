@@ -8,13 +8,13 @@ replicaCount_db: 1
 application_name: "java-app"
 
 image_app:
-  repository: repo.local/db-app 
+  repository: repo.local/java-app 
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1"
 
 image_db:
-  repository: repo.local/java-db 
+  repository: repo.local/db-app 
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1"
@@ -49,10 +49,12 @@ securityContext: {}
   # runAsUser: 1000
 
 service_app:
+  name: java-app-port
   type: ClusterIP
   port: 8080
 
 service_db:
+  name: java-db-port
   type: ClusterIP
   port: 3306
 

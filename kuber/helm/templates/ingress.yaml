@@ -15,5 +15,6 @@ spec:
               service:
                 name: {{ include "java-chart.fullname" . }}
                 port:
-                  number: {{ .Values.service_app.port }}
+                  # number: {{ .Values.service_app.port }}
+                  number: 80
 

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "java-chart.fullname" . }}-db
+  labels:
+    {{- include "java-chart.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service_db.type }}
+  ports:
+    - port: {{ .Values.service_db.port }}
+      targetPort: {{ .Values.service_db.name }}
+      protocol: TCP
+      name: {{ .Values.service_db.name }}
+  selector:
+    app.kubernetes.io/type: "java-db"
+    {{- include "java-chart.selectorLabels" . | nindent 4 }}

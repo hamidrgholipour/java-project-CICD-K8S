@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "java-chart.fullname" . }}
+  name: {{ include "java-chart.fullname" . }}-app 
   labels:
     app.kubernetes.io/type: "java-app"
     {{- include "java-chart.labels" . | nindent 4 }}
@@ -31,7 +31,7 @@ spec:
           image: "{{ .Values.image_app.repository }}:{{ .Values.image_app.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image_app.pullPolicy }}
           ports:
-            - name: java-app-port
+            - name: {{ .Values.service_app.name }}
               containerPort: {{ .Values.service_app.port }}
               protocol: TCP
           resources:
