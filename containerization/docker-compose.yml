@@ -1,24 +1,24 @@
 version: '3.3'
 services:
   db:
-    image: db:v1
-    container_name: "db"
+    image: repo.local/db-app:v1
+    container_name: "db-svc"
     ports:
       - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
+    # volumes:
+    #   - db_data:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=123
 
   cache01:
     image: memcached
-    container_name: cache
+    container_name: cache-svc
     ports:
       - "11211:11211"
 
   mq01:
     image: rabbitmq
-    container_name: mq
+    container_name: mq-svc
     ports:
       - "15672:15672"
     environment:
@@ -26,18 +26,18 @@ services:
       - RABBITMQ_DEFAULT_PASS=test
 
   app:
-    image: app:v1
+    image: repo.local/java-app:v4
     container_name: app
     ports:
-      - "8080:8080"
-    volumes: 
-      - app_data:/usr/local/tomcat/webapps
+      - "8090:8080"
+    # volumes: 
+    #   - app_data:/usr/local/tomcat/webapps
 
-  web:
-    image: web:v1
-    container_name: web
-    ports:
-      - "80:80"
+  # web:
+  #   image: web:v1
+  #   container_name: web
+  #   ports:
+  #     - "80:80"
 volumes:
   db_data: {}
   app_data: {}

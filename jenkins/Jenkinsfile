@@ -39,7 +39,7 @@ pipeline {
             """ 
             }
         }
-        
+
         stage('Build Artifact') {
         agent {
                 docker {
@@ -82,7 +82,7 @@ pipeline {
         
         steps{
             sh '''
-                cd ./jenkins/app/
+                cd ./containerization/app
                 cp /maven-repo/repository/com/visualpathit/vprofile/v2/vprofile*.war app.war
                 docker build -t ${DOCKER_IMAGE_REPO}/java-app:v4 .
             '''

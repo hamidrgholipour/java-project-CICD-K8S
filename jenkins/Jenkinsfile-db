@@ -51,7 +51,7 @@ pipeline {
         steps{
             sh '''
                 pwd
-                cd $WORKSPACE/jenkins/db/
+                cd $WORKSPACE/containerization/db
                 pwd
                 docker build -t ${DOCKER_IMAGE_REPO}/db-app:v1 .
             '''
