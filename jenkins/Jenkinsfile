@@ -9,11 +9,9 @@ pipeline {
 
     environment {
         JAVA_TOOL_OPTIONS = "-Duser.home=/var/maven"
-        DC_IMAGE_NAME       = "java-app"
         //ARTVERSION       = "${env.BUILD_ID}"
         ARTVERSION          = "v1"
         DOCKER_IMAGE_REPO   = "repo.local"
-        CHART_NAME          = "hamid-node"
       }
 
 
@@ -58,7 +56,7 @@ pipeline {
     //   }
     // } 
 
-        stage('Builing docker files'){
+        stage('Building docker files'){
             parallel {
                 stage('Build docker java'){
                     agent{
