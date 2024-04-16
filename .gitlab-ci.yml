@@ -1,0 +1,71 @@
+variables:
+  DOCKER_IMAGE_REPO: repo.local 
+  IMAGE_NAME: $CI_REGISTRY_IMAGE
+
+default:
+    image: docker:24.0.9
+    services:
+    - name:  docker:24.0.9-dind
+
+stages:
+  - test_artifact
+  - build_artifact
+  - biuld_docker_app
+# before_script:
+  # - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+
+
+
+# run_tests:
+#   image: maven:3.8.6-jdk-8
+#   stage: test_artifact
+#   tags:
+#     - docker
+#     - shell
+#     - java
+
+#   script:
+#     - echo test
+#     - cd code
+#     - mvn test
+
+
+build_artifact:
+  image: maven:3.8.6-jdk-8
+  stage: build_artifact
+  tags:
+    - docker
+    - shell
+    - java
+
+  cache: 
+    # keep cache across branch
+    key: "test" 
+    paths:
+      # - code/
+      - ${CI_PROJECT_DIR}/.m2/repository"
+
+  variables:
+    MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"  
+  
+  script: 
+  # - mvn -f code/pom.xml --settings $MAVEN_SETTINGS_XML clean install
+  - mvn -f code/pom.xml clean install
+
+  artifacts:
+    # when: always
+    paths:
+      - code/target/*.war
+
+build_docker_app:
+  stage: biuld_docker_app
+  tags:
+    - docker
+    - shell
+  script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - cd ./containerization/app
+  - cp /maven-repo/repository/com/visualpathit/vprofile/v2/vprofile*.war app.war
+  - docker build -t $CI_REGISTRY/java-app:$CI_COMMIT_SHORT_SHA .
+  - docker push  $CI_REGISTRY/java-app:$CI_COMMIT_SHORT_SHA .
